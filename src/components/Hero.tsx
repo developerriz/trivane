@@ -4,6 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { useVehicle } from "@/context/VehicleContext";
 import gsap from "gsap";
 import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { vehiclesData } from "@/data/vehicles";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -12,16 +21,17 @@ export function Hero() {
   const imageRef = useRef<HTMLImageElement>(null);
 
   const { activeVehicle, setActiveVehicle } = useVehicle();
-  const [location, setLocation] = useState("");
-  const [pickupDate, setPickupDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
+  const [selectedVehicleId, setSelectedVehicleId] = useState<string>("");
+  const router = useRouter();
+
+  const availableVehicles = vehiclesData.filter((v) => v.type === activeVehicle);
 
   const handleSearch = () => {
-    if (!location || !pickupDate || !returnDate) {
-      alert("Please fill in all fields (Location, Pick-up Date, Return Date).");
+    if (!selectedVehicleId) {
+      alert("Please select a vehicle.");
       return;
     }
-    alert(`Searching for ${activeVehicle} in ${location}\nFrom: ${new Date(pickupDate).toLocaleString()}\nTo: ${new Date(returnDate).toLocaleString()}`);
+    router.push(`/vehicle/${selectedVehicleId}`);
   };
 
   useEffect(() => {
@@ -79,35 +89,26 @@ export function Hero() {
           </button>
         </div>
         
-        <div className="flex-1 flex flex-col md:flex-row items-center gap-4 w-full">
-          <div className="flex-1 w-full border-b md:border-b-0 md:border-r border-gray-200 px-4 py-2">
-            <p className="text-xs font-bold text-gray-500 uppercase">Pick-up Location</p>
-            <input 
-              type="text" 
-              placeholder="City, Airport" 
-              className="w-full bg-transparent outline-none font-medium mt-1 text-black placeholder:text-gray-400" 
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
-          </div>
-          <div className="flex-1 w-full border-b md:border-b-0 md:border-r border-gray-200 px-4 py-2">
-            <p className="text-xs font-bold text-gray-500 uppercase">Pick-up Date</p>
-            <input 
-              type="datetime-local" 
-              className="w-full bg-transparent outline-none font-medium mt-1 text-black" 
-              value={pickupDate}
-              onChange={(e) => setPickupDate(e.target.value)}
-            />
-          </div>
-          <div className="flex-1 w-full px-4 py-2">
-            <p className="text-xs font-bold text-gray-500 uppercase">Return Date</p>
-            <input 
-              type="datetime-local" 
-              className="w-full bg-transparent outline-none font-medium mt-1 text-black" 
-              value={returnDate}
-              onChange={(e) => setReturnDate(e.target.value)}
-            />
-          </div>
+        <div className="flex-1 flex items-center px-4 py-2 w-full relative">
+          <Select value={selectedVehicleId} onValueChange={(val) => setSelectedVehicleId(val || "")}>
+            <SelectTrigger className="w-full h-12 border-none bg-transparent shadow-none text-lg font-medium focus:ring-0 px-2 outline-none hover:bg-gray-50/50 transition-colors rounded-lg">
+              <SelectValue placeholder={`Select a ${activeVehicle === 'cars' ? 'car' : 'bike'} from our collection...`}>
+                {selectedVehicleId ? (
+                  (() => {
+                    const selected = availableVehicles.find(v => v.id.toString() === selectedVehicleId);
+                    return selected ? `${selected.brand} ${selected.name} - ₹${selected.price}/day` : "";
+                  })()
+                ) : undefined}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent className="max-h-[300px]">
+              {availableVehicles.map((vehicle) => (
+                <SelectItem key={vehicle.id} value={vehicle.id.toString()} className="cursor-pointer">
+                  {vehicle.brand} {vehicle.name} - ₹{vehicle.price}/day
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         
         <button 
@@ -123,7 +124,7 @@ export function Hero() {
         {/* Placeholder for yellow car - using standard transparent png if possible, else unsplash */}
         <img
           ref={imageRef}
-          src={activeVehicle === "cars" ? "/hero-car.png" : "https://images.unsplash.com/photo-1558981420-c532902e58b4?auto=format&fit=crop&q=80&w=1200"}
+          src={activeVehicle === "cars" ? "/hero-car.png" : "/yamaha-r15.webp"}
           alt={activeVehicle === "cars" ? "Premium Yellow Indian SUV" : "Premium Sports Bike"}
           className="w-full max-w-4xl object-contain drop-shadow-2xl mix-blend-multiply"
           style={{ mixBlendMode: 'multiply' }} 

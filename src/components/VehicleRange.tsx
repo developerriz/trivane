@@ -3,29 +3,19 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useVehicle } from "@/context/VehicleContext";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const categories = [
-  { name: "CARS", img: "/sedan-scenic.png" },
-  { name: "SUVS", img: "/thar-scenic.png" },
-  { name: "VANS", img: "/mpv-scenic.png" },
-  { name: "ELECTRIC", img: "/hero-car.png" },
-];
-
-const bikeCategories = [
-  { name: "CRUISERS", img: "https://images.unsplash.com/photo-1558981285-6f0c94958bb6?auto=format&fit=crop&q=80&w=800" },
-  { name: "SPORTS", img: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&q=80&w=800" },
-  { name: "SCOOTERS", img: "https://images.unsplash.com/photo-1621252179027-94459d278660?auto=format&fit=crop&q=80&w=800" },
-  { name: "ELECTRIC", img: "https://images.unsplash.com/photo-1571501538392-4cb65902e88a?auto=format&fit=crop&q=80&w=800" },
+  { name: "CARS", type: "cars", category: "all", img: "/Audi-s5.png" },
+  { name: "BIKES", type: "bikes", category: "all", img: "/yamaha-r15.webp" },
+  { name: "SCOOTERS", type: "bikes", category: "scooters", img: "/yamaha-ray-zr_1.webp" },
 ];
 
 export function VehicleRange() {
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const { activeVehicle } = useVehicle();
-  const activeCategories = activeVehicle === "cars" ? categories : bikeCategories;
 
   useEffect(() => {
     if (gridRef.current) {
@@ -55,19 +45,20 @@ export function VehicleRange() {
         </h2>
         
         <div ref={gridRef} className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {activeCategories.map((cat, idx) => (
-            <div 
+          {categories.map((cat, idx) => (
+            <Link 
+              href={`/gallery?type=${cat.type === 'bikes' && cat.category === 'scooters' ? 'scooters' : cat.type}`}
               key={idx} 
-              className="group relative aspect-[4/3] rounded-3xl overflow-hidden cursor-pointer shadow-lg"
+              className="group relative aspect-[4/3] rounded-3xl overflow-hidden cursor-pointer shadow-lg block"
             >
               <img 
                 src={cat.img} 
                 alt={cat.name} 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
               <div className="absolute top-8 left-8">
-                <h3 className="font-heading text-3xl font-bold text-white uppercase tracking-wider">
+                <h3 className="font-heading text-3xl font-bold text-black uppercase tracking-wider">
                   {cat.name}
                 </h3>
                 <div className="w-10 h-10 border border-white/30 rounded-full flex items-center justify-center mt-4 group-hover:bg-primary group-hover:border-primary transition-colors">
@@ -76,7 +67,7 @@ export function VehicleRange() {
                   </svg>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -15,6 +15,8 @@ const syncopate = Syncopate({
   variable: "--font-heading",
 });
 
+import { OfflineOverlay } from "@/components/OfflineOverlay";
+
 export const metadata: Metadata = {
   title: "Trivane - Premium Car & Bike Rental",
   description: "Modern premium vehicle rental services.",
@@ -30,7 +32,8 @@ export default function RootLayout({
       lang="en"
       className={cn("h-full", "antialiased", inter.variable, syncopate.variable, "font-sans")}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <OfflineOverlay />
         <VehicleProvider>{children}</VehicleProvider>
       </body>
     </html>

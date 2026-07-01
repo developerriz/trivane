@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -15,10 +16,17 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isRentalOpen, setIsRentalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  const pathname = usePathname();
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault();
-    gsap.to(window, { duration: 1, scrollTo: targetId, ease: "power3.inOut" });
+    if (pathname === "/") {
+      e.preventDefault();
+      gsap.to(window, { duration: 1, scrollTo: targetId, ease: "power3.inOut" });
+      // Update the URL without reloading the page
+      window.history.pushState(null, "", targetId);
+    }
     setIsMobileMenuOpen(false);
   };
 
@@ -39,8 +47,25 @@ export function Header() {
 
     const handleScrollEvent = () => {
       setIsScrolled(window.scrollY > 20);
+
+      if (window.location.pathname === "/") {
+        const sections = ["contact", "rentals", "about", "home"];
+        let current = "home";
+        for (const section of sections) {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top <= 150) {
+              current = section;
+              break;
+            }
+          }
+        }
+        setActiveSection(current);
+      }
     };
     window.addEventListener("scroll", handleScrollEvent);
+    handleScrollEvent(); // trigger once on mount
     return () => window.removeEventListener("scroll", handleScrollEvent);
   }, []);
 
@@ -64,41 +89,88 @@ export function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           <Link
-            href="#home"
+            href="/#home"
             onClick={(e) => handleScroll(e, "#home")}
-            className="text-sm font-medium hover:text-primary transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              pathname === "/" && activeSection === "home" ? "text-primary" : "hover:text-primary text-gray-800"
+            }`}
           >
             Home
           </Link>
 
           <Link
-            href="#about"
+            href="/#about"
             onClick={(e) => handleScroll(e, "#about")}
-            className="text-sm font-medium hover:text-primary transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              pathname === "/" && activeSection === "about" ? "text-primary" : "hover:text-primary text-gray-800"
+            }`}
           >
             About Us
           </Link>
 
           <Link
-            href="#rentals"
+            href="/#rentals"
             onClick={(e) => handleScroll(e, "#rentals")}
-            className="text-sm font-medium hover:text-primary transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              pathname === "/" && activeSection === "rentals" ? "text-primary" : "hover:text-primary text-gray-800"
+            }`}
           >
             Rentals
           </Link>
 
-          <Link
-            href="#tours"
-            onClick={(e) => handleScroll(e, "#tours")}
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Tours
-          </Link>
+          <div className="relative group">
+            <Link
+              href="/tours"
+              className={`text-sm font-medium transition-colors flex items-center gap-1 h-10 px-4 rounded-md hover:bg-primary group-hover:bg-primary ${
+                pathname.startsWith("/tours") ? "bg-primary text-black" : "text-gray-800"
+              }`}
+            >
+              Tours <ChevronDown className="w-4 h-4" />
+            </Link>
+            
+            {/* Main Dropdown Menu */}
+            <div className="absolute top-full left-0 w-64 bg-white border border-border shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              
+              {/* Nested Group: Tours by Destination */}
+              <div className="group/dest relative">
+                <Link href="/tours" className="block px-4 py-3 text-sm text-gray-800 font-medium hover:bg-primary transition-colors border-b border-border flex justify-between items-center">
+                  <span>Tours by Destination</span>
+                  <span className="text-xs">›</span>
+                </Link>
+                
+                {/* Sub-menu for Destinations */}
+                <div className="absolute top-0 left-full w-48 bg-white border border-border shadow-xl opacity-0 invisible group-hover/dest:opacity-100 group-hover/dest:visible transition-all duration-200 z-50 max-h-[60vh] overflow-y-auto">
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors border-b border-border">Guwahati Tours</Link>
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors border-b border-border">Kaziranga Tours</Link>
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors border-b border-border">Cherrapunji Tours</Link>
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors border-b border-border">Shillong Tours</Link>
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors border-b border-border">Dawki Tours</Link>
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors border-b border-border">Jorhat Tours</Link>
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors border-b border-border">Dirang Tours</Link>
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors border-b border-border">Bomdila Tours</Link>
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors border-b border-border">Sonitpur Tours</Link>
+                  <Link href="/tours" className="block px-4 py-2.5 text-sm hover:bg-muted transition-colors">Sivsagar Tours</Link>
+                </div>
+              </div>
+
+              <Link href="/tours" className="block px-4 py-3 text-sm text-gray-800 font-medium hover:bg-primary transition-colors border-b border-border flex justify-between items-center">
+                <span>Tours by Theme</span>
+                <span className="text-xs">›</span>
+              </Link>
+              
+              <Link href="/tours" className="block px-4 py-3 text-sm text-gray-800 font-medium hover:bg-primary transition-colors flex justify-between items-center">
+                <span>Tours by Activity</span>
+                <span className="text-xs">›</span>
+              </Link>
+            </div>
+          </div>
 
           <Link
-            href="#contact"
+            href="/#contact"
             onClick={(e) => handleScroll(e, "#contact")}
-            className="text-sm font-medium hover:text-primary transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              pathname === "/" && activeSection === "contact" ? "text-primary" : "hover:text-primary text-gray-800"
+            }`}
           >
             Contact Us
           </Link>
@@ -110,9 +182,11 @@ export function Header() {
             <User size={18} />
           </button>
 
-          <Button className="rounded-full px-8 bg-primary hover:bg-primary/90 font-bold">
-            Sign in
-          </Button>
+          <Link href="/auth">
+            <Button className="rounded-full px-8 bg-primary hover:bg-primary/90 font-bold">
+              Sign in
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
@@ -129,41 +203,41 @@ export function Header() {
         <div className="md:hidden absolute top-24 left-0 right-0 bg-background border-b border-border p-6 shadow-xl flex flex-col gap-6">
 
           <Link
-            href="#home"
+            href="/#home"
             onClick={(e) => handleScroll(e, "#home")}
-            className="text-lg font-medium"
+            className={`text-lg font-medium ${pathname === "/" && activeSection === "home" ? "text-primary" : "text-gray-800"}`}
           >
             Home
           </Link>
 
           <Link
-            href="#about"
+            href="/#about"
             onClick={(e) => handleScroll(e, "#about")}
-            className="text-lg font-medium"
+            className={`text-lg font-medium ${pathname === "/" && activeSection === "about" ? "text-primary" : "text-gray-800"}`}
           >
             About Us
           </Link>
 
           <Link
-            href="#rentals"
+            href="/#rentals"
             onClick={(e) => handleScroll(e, "#rentals")}
-            className="text-lg font-medium"
+            className={`text-lg font-medium ${pathname === "/" && activeSection === "rentals" ? "text-primary" : "text-gray-800"}`}
           >
             Rentals
           </Link>
 
           <Link
-            href="#tours"
-            onClick={(e) => handleScroll(e, "#tours")}
-            className="text-lg font-medium"
+            href="/tours"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`text-lg font-medium ${pathname.startsWith("/tours") ? "text-primary" : "text-gray-800"}`}
           >
             Tours
           </Link>
 
           <Link
-            href="#contact"
+            href="/#contact"
             onClick={(e) => handleScroll(e, "#contact")}
-            className="text-lg font-medium"
+            className={`text-lg font-medium ${pathname === "/" && activeSection === "contact" ? "text-primary" : "text-gray-800"}`}
           >
             Contact Us
           </Link>

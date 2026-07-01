@@ -11,146 +11,11 @@ import { EffectCoverflow } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-coverflow";
+import { carsData, bikesData } from "@/data/vehicles";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const carsData = [
-  {
-    id: 1,
-    brand: "Skoda",
-    name: "Skoda Kodiaq",
-    image: "/mg-hagtor.png",
-    speed: "210 km/h",
-    transmission: "7 speed",
-    seats: "7 seats",
-    fuel: "Diesel",
-    price: 150
-  },
-  {
-    id: 2,
-    brand: "MG",
-    name: "MG Hector",
-    image: "/Audi-s5.png",
-    speed: "195 km/h",
-    transmission: "Auto",
-    seats: "5 seats",
-    fuel: "Petrol",
-    price: 120
-  },
-  {
-    id: 3,
-    brand: "Lamborghini",
-    name: "Lamborghini Urus",
-    image: "/hero-car.png", // Using hero car for the central premium vehicle
-    speed: "306 km/h",
-    transmission: "8 speed",
-    seats: "5 seats",
-    fuel: "Petrol",
-    price: 850
-  },
-  {
-    id: 4,
-    brand: "BMW",
-    name: "BMW X5",
-    image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80",
-    speed: "243 km/h",
-    transmission: "8 speed",
-    seats: "5 seats",
-    fuel: "Diesel",
-    price: 250
-  },
-  {
-    id: 5,
-    brand: "Hyundai",
-    name: "Hyundai Tucson",
-    image: "https://images.unsplash.com/photo-1633501704283-097fa620f4f9?auto=format&fit=crop&w=800&q=80",
-    speed: "201 km/h",
-    transmission: "Auto",
-    seats: "5 seats",
-    fuel: "Petrol",
-    price: 110
-  },
-  {
-    id: 6,
-    brand: "Kia",
-    name: "Kia Seltos",
-    image: "https://images.unsplash.com/photo-1619682817481-e994891cd1f5?auto=format&fit=crop&w=800&q=80",
-    speed: "170 km/h",
-    transmission: "Manual",
-    seats: "5 seats",
-    fuel: "Diesel",
-    price: 90
-  }
-];
 
-const bikesData = [
-  {
-    id: 1,
-    brand: "Royal Enfield",
-    name: "Classic 350",
-    image: "https://images.unsplash.com/photo-1558981420-c532902e58b4?auto=format&fit=crop&w=800&q=80",
-    speed: "115 km/h",
-    transmission: "5 speed",
-    seats: "2 seats",
-    fuel: "Petrol",
-    price: 35
-  },
-  {
-    id: 2,
-    brand: "KTM",
-    name: "Duke 390",
-    image: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80",
-    speed: "167 km/h",
-    transmission: "6 speed",
-    seats: "2 seats",
-    fuel: "Petrol",
-    price: 45
-  },
-  {
-    id: 3,
-    brand: "Harley Davidson",
-    name: "Iron 883",
-    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80",
-    speed: "170 km/h",
-    transmission: "5 speed",
-    seats: "2 seats",
-    fuel: "Petrol",
-    price: 80
-  },
-  {
-    id: 4,
-    brand: "Ducati",
-    name: "Panigale V4",
-    image: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80",
-    speed: "299 km/h",
-    transmission: "6 speed",
-    seats: "2 seats",
-    fuel: "Petrol",
-    price: 150
-  },
-  {
-    id: 5,
-    brand: "Yamaha",
-    name: "R15 V4",
-    image: "https://images.unsplash.com/photo-1558981420-c532902e58b4?auto=format&fit=crop&w=800&q=80",
-    speed: "140 km/h",
-    transmission: "6 speed",
-    seats: "2 seats",
-    fuel: "Petrol",
-    price: 40
-  },
-  {
-    id: 6,
-    brand: "Bajaj",
-    name: "Dominar 400",
-    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80",
-    speed: "150 km/h",
-    transmission: "6 speed",
-    seats: "2 seats",
-    fuel: "Petrol",
-    price: 38
-  }
-];
 
 export function DreamCar() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -195,7 +60,7 @@ export function DreamCar() {
         </h2>
         
         {/* Car Showcase */}
-        <div className="relative mt-12 md:mt-20 max-w-[1400px] mx-auto h-[300px] md:h-[450px] flex items-center justify-center">
+        <div className="relative mt-12 md:mt-20 max-w-[1400px] mx-auto h-[350px] md:h-[500px] lg:h-[650px] flex items-center justify-center">
           <Swiper
             effect={"coverflow"}
             grabCursor={true}
@@ -211,12 +76,12 @@ export function DreamCar() {
             modules={[EffectCoverflow]}
             className="w-full h-full !overflow-visible"
             onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-            initialSlide={2}
+            initialSlide={1}
             slideToClickedSlide={true}
             onSwiper={setSwiperRef}
           >
             {activeData.map((car, index) => (
-              <SwiperSlide key={car.id} className="!w-[280px] md:!w-[550px] self-center">
+              <SwiperSlide key={car.id} className="!w-[320px] md:!w-[600px] lg:!w-[896px] self-center">
                 <div 
                   onClick={() => handleCarClick(index)}
                   className={`w-full h-full flex items-center justify-center transition-all duration-500 ${activeIndex === index ? "scale-110 drop-shadow-2xl cursor-default" : "opacity-60 scale-90 cursor-pointer hover:opacity-80"}`}
