@@ -25,7 +25,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "7 speed",
     seats: "7 seats",
     fuel: "Diesel",
-    price: 150
+    price: 3500
   },
   {
     id: 2,
@@ -38,7 +38,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "Auto",
     seats: "5 seats",
     fuel: "Petrol",
-    price: 120
+    price: 2800
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "8 speed",
     seats: "5 seats",
     fuel: "Petrol",
-    price: 850
+    price: 15000
   },
   {
     id: 4,
@@ -64,7 +64,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "Auto",
     seats: "5 seats",
     fuel: "Hybrid",
-    price: 300
+    price: 4500
   },
   
 
@@ -80,7 +80,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "5 speed",
     seats: "2 seats",
     fuel: "Petrol",
-    price: 35
+    price: 1500
   },
   {
     id: 102,
@@ -93,7 +93,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "6 speed",
     seats: "2 seats",
     fuel: "Petrol",
-    price: 45
+    price: 1800
   },
   {
     id: 103,
@@ -106,7 +106,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "5 speed",
     seats: "2 seats",
     fuel: "Petrol",
-    price: 80
+    price: 4000
   },
   {
     id: 104,
@@ -119,7 +119,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "6 speed",
     seats: "2 seats",
     fuel: "Petrol",
-    price: 40
+    price: 1600
   },
   {
     id: 105,
@@ -132,7 +132,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "Auto",
     seats: "2 seats",
     fuel: "Petrol",
-    price: 20
+    price: 800
   },
   {
     id: 106,
@@ -145,7 +145,7 @@ export const vehiclesData: Vehicle[] = [
     transmission: "Auto",
     seats: "2 seats",
     fuel: "Electric",
-    price: 25
+    price: 1000
   },
 ];
 

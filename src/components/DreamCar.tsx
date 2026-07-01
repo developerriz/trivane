@@ -130,7 +130,7 @@ export function DreamCar() {
           <div className="flex-1 w-full px-6 py-2 flex items-center gap-4">
             <Tag className="text-gray-400 rotate-90" size={24} />
             <div className="flex items-baseline gap-1 border-l-2 border-gray-100 pl-6">
-              <span className="text-sm font-bold text-[#F4A261]">$</span>
+              <span className="text-sm font-bold text-[#F4A261]">₹</span>
               <span className="text-4xl font-black text-[#111] tracking-tighter">{activeCar.price}</span>
               <span className="text-sm font-medium text-gray-400 ml-1">/day</span>
             </div>

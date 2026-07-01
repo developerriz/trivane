@@ -83,7 +83,7 @@ export default async function VehicleDetailsPage({
             <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">{vehicle.name}</h1>
             
             <div className="flex items-end gap-2 mb-8">
-              <span className="text-4xl font-bold">${vehicle.price}</span>
+              <span className="text-4xl font-bold">₹{vehicle.price}</span>
               <span className="text-muted-foreground pb-1">/ day</span>
             </div>
             

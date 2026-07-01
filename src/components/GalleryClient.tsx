@@ -13,7 +13,7 @@ function GalleryContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState(initialType); // "all", "cars", "bikes", "scooters"
   const [brandFilter, setBrandFilter] = useState("all");
-  const [maxPrice, setMaxPrice] = useState(1000); // arbitrarily high max price for slider
+  const [maxPrice, setMaxPrice] = useState(20000); // arbitrarily high max price for slider
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
   // Extract unique brands for dropdown
@@ -121,13 +121,13 @@ function GalleryContent() {
         <div>
           <label className="text-sm font-semibold mb-3 flex justify-between uppercase tracking-wider text-muted-foreground">
             <span>Max Price (/day)</span>
-            <span className="text-foreground font-bold">${maxPrice}</span>
+            <span className="text-foreground font-bold">₹{maxPrice}</span>
           </label>
           <input 
             type="range" 
-            min="10" 
-            max="1000" 
-            step="10"
+            min="500" 
+            max="20000" 
+            step="100"
             value={maxPrice}
             onChange={(e) => setMaxPrice(Number(e.target.value))}
             className="w-full accent-primary h-2 bg-muted rounded-lg appearance-none cursor-pointer"
@@ -142,13 +142,13 @@ function GalleryContent() {
             Showing <span className="text-foreground font-bold">{filteredVehicles.length}</span> vehicles
           </p>
           {/* Quick reset */}
-          {(searchQuery || typeFilter !== 'all' || brandFilter !== 'all' || maxPrice < 1000) && (
+          {(searchQuery || typeFilter !== 'all' || brandFilter !== 'all' || maxPrice < 20000) && (
             <button 
               onClick={() => {
                 setSearchQuery("");
                 setTypeFilter("all");
                 setBrandFilter("all");
-                setMaxPrice(1000);
+                setMaxPrice(20000);
               }}
               className="text-sm text-red-500 hover:text-red-600 font-medium flex items-center gap-1 transition-colors"
             >
@@ -173,7 +173,7 @@ function GalleryContent() {
                     className="w-full h-full object-contain relative z-20 group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute top-4 right-4 z-30 bg-background/80 backdrop-blur-md px-3 py-1.5 rounded-full text-sm font-semibold">
-                    ${vehicle.price}<span className="text-muted-foreground font-normal text-xs">/day</span>
+                    ₹{vehicle.price}<span className="text-muted-foreground font-normal text-xs">/day</span>
                   </div>
                 </div>
                 
