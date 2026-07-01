@@ -81,25 +81,37 @@ export function Blog() {
           STORIES BEHIND <br /> THE WHEEL
         </h2>
         
-        <div ref={cardsRef} className="grid md:grid-cols-3 gap-8">
+        <div ref={cardsRef} className="flex flex-col gap-16 md:gap-24 relative pb-20 w-full max-w-5xl mx-auto">
           {activePosts.map((post, idx) => (
-            <div key={idx} className="group cursor-pointer">
-              <div className="border-t-2 border-foreground pt-4 mb-4">
-                <div className="text-xl font-heading font-bold text-foreground">
-                  {post.date.split(" ")[0]} <span className="text-sm font-normal text-muted-foreground">{post.date.split(" ").slice(1).join(" ")}</span>
+            <div 
+              key={idx} 
+              className="group cursor-pointer sticky bg-card border border-border shadow-2xl rounded-[2rem] p-6 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center will-change-transform transition-all duration-300 hover:shadow-primary/20"
+              style={{ 
+                top: `calc(8rem + ${idx * 2.5}rem)`,
+                zIndex: idx
+              }}
+            >
+              <div className="flex-1 space-y-6 w-full">
+                <div className="border-t-2 border-foreground pt-4 inline-block w-full">
+                  <div className="text-xl font-heading font-bold text-foreground">
+                    {post.date.split(" ")[0]} <span className="text-sm font-normal text-muted-foreground">{post.date.split(" ").slice(1).join(" ")}</span>
+                  </div>
                 </div>
+                <h3 className="font-bold text-3xl md:text-4xl text-foreground leading-tight group-hover:text-primary transition-colors">
+                  {post.title}
+                </h3>
+                <p className="text-muted-foreground text-lg">
+                  {post.desc}
+                </p>
+                <button className="text-sm font-bold uppercase tracking-wider text-primary flex items-center gap-2 group-hover:gap-4 transition-all">
+                  Read Story <span>&rarr;</span>
+                </button>
               </div>
-              <h3 className="font-bold text-lg text-foreground mb-2 leading-tight group-hover:text-primary transition-colors">
-                {post.title}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-6">
-                {post.desc}
-              </p>
-              <div className="aspect-[4/3] overflow-hidden rounded-xl">
+              <div className="w-full md:w-[45%] aspect-[4/3] md:aspect-square overflow-hidden rounded-2xl shrink-0 shadow-lg">
                 <img 
                   src={post.img} 
                   alt={post.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
             </div>
