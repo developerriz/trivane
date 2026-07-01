@@ -69,7 +69,7 @@ export function Hero() {
         ref={headingRef}
         className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold uppercase text-center tracking-tight text-foreground z-10 leading-[0.9]"
       >
-        PREMIUM {activeVehicle === "cars" ? "CAR" : "BIKE"} <br /> RENTAL
+        SELF DRIVE {activeVehicle === "cars" ? "CAR" : "BIKE"} <br /> RENTAL
       </h1>
 
       {/* Booking Form */}
