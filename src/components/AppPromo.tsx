@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useVehicle } from "@/context/VehicleContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -10,6 +11,7 @@ export function AppPromo() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const { activeVehicle } = useVehicle();
 
   useEffect(() => {
     if (sectionRef.current) {
@@ -49,10 +51,10 @@ export function AppPromo() {
         
         <div ref={textRef} className="max-w-xl">
           <h2 className="font-heading text-4xl md:text-5xl font-bold uppercase tracking-tight text-foreground leading-tight">
-            FIND CARS IN <br /> YOUR LOCATIONS
+            FIND {activeVehicle === "cars" ? "CARS" : "BIKES"} IN <br /> YOUR LOCATIONS
           </h2>
           <p className="mt-6 text-muted-foreground text-lg leading-relaxed">
-            With our app, you can easily discover the perfect ride right around the corner. We bring premium car rental services directly to your smartphone. Book, unlock, and drive within minutes.
+            With our app, you can easily discover the perfect ride right around the corner. We bring premium {activeVehicle === "cars" ? "car" : "bike"} rental services directly to your smartphone. Book, unlock, and drive within minutes.
           </p>
           <button className="mt-8 bg-[#111111] text-white px-8 py-3 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-black/80 transition-colors">
             Explore
@@ -78,7 +80,7 @@ export function AppPromo() {
             </div>
             <div>
               <p className="text-xs text-gray-500 font-bold">Nearby</p>
-              <p className="text-sm font-bold">12 Cars Available</p>
+              <p className="text-sm font-bold">12 {activeVehicle === "cars" ? "Cars" : "Bikes"} Available</p>
             </div>
           </div>
         </div>

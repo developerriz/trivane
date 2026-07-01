@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Gauge, Settings2, Users, Fuel, Tag } from "lucide-react";
+import { useVehicle } from "@/context/VehicleContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow } from "swiper/modules";
 
@@ -18,7 +19,7 @@ const carsData = [
     id: 1,
     brand: "Skoda",
     name: "Skoda Kodiaq",
-    image: "https://images.unsplash.com/photo-1518987048-93e29699e79a?auto=format&fit=crop&w=800&q=80",
+    image: "/mg-hagtor.png",
     speed: "210 km/h",
     transmission: "7 speed",
     seats: "7 seats",
@@ -29,7 +30,7 @@ const carsData = [
     id: 2,
     brand: "MG",
     name: "MG Hector",
-    image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80",
+    image: "/Audi-s5.png",
     speed: "195 km/h",
     transmission: "Auto",
     seats: "5 seats",
@@ -82,12 +83,90 @@ const carsData = [
   }
 ];
 
+const bikesData = [
+  {
+    id: 1,
+    brand: "Royal Enfield",
+    name: "Classic 350",
+    image: "https://images.unsplash.com/photo-1558981420-c532902e58b4?auto=format&fit=crop&w=800&q=80",
+    speed: "115 km/h",
+    transmission: "5 speed",
+    seats: "2 seats",
+    fuel: "Petrol",
+    price: 35
+  },
+  {
+    id: 2,
+    brand: "KTM",
+    name: "Duke 390",
+    image: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80",
+    speed: "167 km/h",
+    transmission: "6 speed",
+    seats: "2 seats",
+    fuel: "Petrol",
+    price: 45
+  },
+  {
+    id: 3,
+    brand: "Harley Davidson",
+    name: "Iron 883",
+    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80",
+    speed: "170 km/h",
+    transmission: "5 speed",
+    seats: "2 seats",
+    fuel: "Petrol",
+    price: 80
+  },
+  {
+    id: 4,
+    brand: "Ducati",
+    name: "Panigale V4",
+    image: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80",
+    speed: "299 km/h",
+    transmission: "6 speed",
+    seats: "2 seats",
+    fuel: "Petrol",
+    price: 150
+  },
+  {
+    id: 5,
+    brand: "Yamaha",
+    name: "R15 V4",
+    image: "https://images.unsplash.com/photo-1558981420-c532902e58b4?auto=format&fit=crop&w=800&q=80",
+    speed: "140 km/h",
+    transmission: "6 speed",
+    seats: "2 seats",
+    fuel: "Petrol",
+    price: 40
+  },
+  {
+    id: 6,
+    brand: "Bajaj",
+    name: "Dominar 400",
+    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80",
+    speed: "150 km/h",
+    transmission: "6 speed",
+    seats: "2 seats",
+    fuel: "Petrol",
+    price: 38
+  }
+];
+
 export function DreamCar() {
   const sectionRef = useRef<HTMLElement>(null);
   const specsRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(2); // Default to Lamborghini
+  const [swiperRef, setSwiperRef] = useState<any>(null);
+  const { activeVehicle } = useVehicle();
+  const activeData = activeVehicle === "cars" ? carsData : bikesData;
 
-  const activeCar = carsData[activeIndex] || carsData[0];
+  const handleCarClick = (index: number) => {
+    if (swiperRef) {
+      swiperRef.slideTo(index);
+    }
+  };
+
+  const activeCar = activeData[activeIndex] || activeData[0];
 
   useEffect(() => {
     if (sectionRef.current) {
@@ -112,7 +191,7 @@ export function DreamCar() {
     <section ref={sectionRef} className="py-24 bg-[#F8F7F3] relative overflow-hidden text-center">
       <div className="container mx-auto px-6">
         <h2 className="font-heading text-3xl md:text-5xl font-extrabold uppercase tracking-widest text-[#111]">
-          PICK YOUR DREAM <br /> CAR TODAY
+          PICK YOUR DREAM <br /> {activeVehicle === "cars" ? "CAR" : "BIKE"} TODAY
         </h2>
         
         {/* Car Showcase */}
@@ -124,8 +203,8 @@ export function DreamCar() {
             slidesPerView={"auto"}
             coverflowEffect={{
               rotate: 0,
-              stretch: 80,
-              depth: 300,
+              stretch: -50,
+              depth: 250,
               modifier: 1,
               slideShadows: false,
             }}
@@ -134,10 +213,14 @@ export function DreamCar() {
             onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
             initialSlide={2}
             slideToClickedSlide={true}
+            onSwiper={setSwiperRef}
           >
-            {carsData.map((car, index) => (
+            {activeData.map((car, index) => (
               <SwiperSlide key={car.id} className="!w-[280px] md:!w-[550px] self-center">
-                <div className={`w-full h-full flex items-center justify-center transition-all duration-500 ${activeIndex === index ? "scale-110 drop-shadow-2xl" : "opacity-60 scale-90"}`}>
+                <div 
+                  onClick={() => handleCarClick(index)}
+                  className={`w-full h-full flex items-center justify-center transition-all duration-500 ${activeIndex === index ? "scale-110 drop-shadow-2xl cursor-default" : "opacity-60 scale-90 cursor-pointer hover:opacity-80"}`}
+                >
                   <img 
                     src={car.image} 
                     alt={car.name} 

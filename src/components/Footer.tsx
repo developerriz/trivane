@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="bg-[#111111] text-white">
+    <footer id="contact" className="bg-[#111111] text-white">
       {/* Newsletter Section */}
       <div className="border-b border-white/10">
         <div className="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center justify-between gap-8">

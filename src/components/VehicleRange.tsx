@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useVehicle } from "@/context/VehicleContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,9 +14,18 @@ const categories = [
   { name: "ELECTRIC", img: "/hero-car.png" },
 ];
 
+const bikeCategories = [
+  { name: "CRUISERS", img: "https://images.unsplash.com/photo-1558981285-6f0c94958bb6?auto=format&fit=crop&q=80&w=800" },
+  { name: "SPORTS", img: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&q=80&w=800" },
+  { name: "SCOOTERS", img: "https://images.unsplash.com/photo-1621252179027-94459d278660?auto=format&fit=crop&q=80&w=800" },
+  { name: "ELECTRIC", img: "https://images.unsplash.com/photo-1571501538392-4cb65902e88a?auto=format&fit=crop&q=80&w=800" },
+];
+
 export function VehicleRange() {
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const { activeVehicle } = useVehicle();
+  const activeCategories = activeVehicle === "cars" ? categories : bikeCategories;
 
   useEffect(() => {
     if (gridRef.current) {
@@ -38,14 +48,14 @@ export function VehicleRange() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-background">
+    <section id="rentals" ref={sectionRef} className="py-24 bg-background">
       <div className="container mx-auto px-6">
         <h2 className="font-heading text-4xl md:text-5xl font-bold uppercase tracking-tight text-center text-foreground mb-16">
           WIDE RANGE OF <br /> VEHICLES
         </h2>
         
         <div ref={gridRef} className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {categories.map((cat, idx) => (
+          {activeCategories.map((cat, idx) => (
             <div 
               key={idx} 
               className="group relative aspect-[4/3] rounded-3xl overflow-hidden cursor-pointer shadow-lg"

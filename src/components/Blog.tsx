@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useVehicle } from "@/context/VehicleContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,9 +28,32 @@ const posts = [
   },
 ];
 
+const bikePosts = [
+  {
+    date: "25 OCT 2023",
+    title: "Mastering the art of leaning",
+    desc: "Discover professional techniques for handling tight corners on two wheels.",
+    img: "https://images.unsplash.com/photo-1558981285-6f0c94958bb6?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    date: "04 NOV 2023",
+    title: "Must-have gear for road trips",
+    desc: "A comprehensive guide to the essential safety gear you should always wear.",
+    img: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    date: "19 DEC 2023",
+    title: "Single bikes to touring groups",
+    desc: "How our rental services scale from individual needs to group expeditions.",
+    img: "https://images.unsplash.com/photo-1571501538392-4cb65902e88a?auto=format&fit=crop&q=80&w=800",
+  },
+];
+
 export function Blog() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const { activeVehicle } = useVehicle();
+  const activePosts = activeVehicle === "cars" ? posts : bikePosts;
 
   useEffect(() => {
     if (cardsRef.current) {
@@ -51,14 +75,14 @@ export function Blog() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-background">
+    <section id="tours" ref={sectionRef} className="py-24 bg-background">
       <div className="container mx-auto px-6">
         <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-tight text-center text-foreground mb-16">
           STORIES BEHIND <br /> THE WHEEL
         </h2>
         
         <div ref={cardsRef} className="grid md:grid-cols-3 gap-8">
-          {posts.map((post, idx) => (
+          {activePosts.map((post, idx) => (
             <div key={idx} className="group cursor-pointer">
               <div className="border-t-2 border-foreground pt-4 mb-4">
                 <div className="text-xl font-heading font-bold text-foreground">

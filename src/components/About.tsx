@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useVehicle } from "@/context/VehicleContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -11,6 +12,8 @@ export function About() {
   const leftColRef = useRef<HTMLDivElement>(null);
   const rightColRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+
+  const { activeVehicle } = useVehicle();
 
   useEffect(() => {
     if (sectionRef.current) {
@@ -60,7 +63,7 @@ export function About() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-32 bg-background relative overflow-hidden">
+    <section id="about" ref={sectionRef} className="py-24 md:py-32 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6">
         
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -71,13 +74,13 @@ export function About() {
             </h2>
             <div className="mt-6 space-y-4 text-muted-foreground text-sm md:text-base leading-relaxed max-w-xl">
               <p>
-                Trivane is the leading marketplace for Bike Rent and Self Drive Car Rental platform across North East India. Trivane offer well-maintained vehicles for comfortable travel and immersive tours that showcase the region's natural beauty and rich heritage. Guests in the Trivane community enjoy a diverse, affordable selection of Bikes and Cars to unlock memorable driving experiences with friends and family. Founded in 2018 and headquartered in Guwahati(Assam), operates all over North East india.
+                Trivane is the leading marketplace for {activeVehicle === 'cars' ? 'Self Drive Car Rental' : 'Bike Rent'} platform across North East India. Trivane offer well-maintained vehicles for comfortable travel and immersive tours that showcase the region's natural beauty and rich heritage. Guests in the Trivane community enjoy a diverse, affordable selection of {activeVehicle === 'cars' ? 'Cars' : 'Bikes'} to unlock memorable driving experiences with friends and family. Founded in 2018 and headquartered in Guwahati(Assam), operates all over North East india.
               </p>
               <p>
-                Welcome to the vibrant city of Guwahati, where exploring every nook and cranny is now a breeze with Bike Rent and Self Drive Car Rental. Whether you're a local looking for a convenient ride or a traveler eager to explore the beauty of Assam at your own pace, Bike Rent and Self Drive Car Rental in Guwahati offer the perfect solution. Skip the hassles of traditional rental services and experience the freedom of the road on your terms.
+                Welcome to the vibrant city of Guwahati, where exploring every nook and cranny is now a breeze with {activeVehicle === 'cars' ? 'Self Drive Car Rental' : 'Bike Rent'}. Whether you're a local looking for a convenient ride or a traveler eager to explore the beauty of Assam at your own pace, {activeVehicle === 'cars' ? 'Self Drive Car Rental' : 'Bike Rent'} in Guwahati offer the perfect solution. Skip the hassles of traditional rental services and experience the freedom of the road on your terms.
               </p>
               <p>
-                If you're looking for Bike Rent and Self Drive Car Rental to rent near you, Trivane is your perfect solution! Pick your date & time of travel, select the vehicle of your choice from our wide range of Bikes and Cars.
+                If you're looking for {activeVehicle === 'cars' ? 'Self Drive Car Rental' : 'Bike Rent'} to rent near you, Trivane is your perfect solution! Pick your date & time of travel, select the vehicle of your choice from our wide range of {activeVehicle === 'cars' ? 'Cars' : 'Bikes'}.
               </p>
             </div>
             <button className="mt-8 bg-[#111111] text-white px-8 py-3 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-black/80 transition-colors">
@@ -93,8 +96,8 @@ export function About() {
               </svg>
             </div>
             <img 
-              src="/thar-scenic.png" 
-              alt="Indian Scenic SUV" 
+              src={activeVehicle === "cars" ? "/thar-scenic.png" : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=800"} 
+              alt={activeVehicle === "cars" ? "Indian Scenic SUV" : "Scenic Bike"} 
               className="w-full rounded-[40px] shadow-2xl object-cover h-[600px] relative z-0"
             />
           </div>
@@ -124,7 +127,7 @@ export function About() {
             </div>
             <div>
               <div className="text-xl md:text-2xl font-heading font-bold text-foreground leading-snug">
-                Tour Operators, Bike Rental, Self Drive Car, Scooty Rental
+                {activeVehicle === 'cars' ? 'Tour Operators, Self Drive Car' : 'Tour Operators, Bike Rental, Scooty Rental'}
               </div>
               <p className="text-sm font-bold uppercase text-muted-foreground mt-2">
                 Services We Offer

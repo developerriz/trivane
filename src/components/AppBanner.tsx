@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useVehicle } from "@/context/VehicleContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +11,7 @@ export function AppBanner() {
   const sectionRef = useRef<HTMLElement>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
   const logosRef = useRef<HTMLDivElement>(null);
+  const { activeVehicle } = useVehicle();
 
   useEffect(() => {
     if (sectionRef.current) {
@@ -50,7 +52,7 @@ export function AppBanner() {
         
         {/* Logos Row */}
         <div ref={logosRef} className="flex flex-wrap justify-center items-center gap-8 md:gap-16 mb-24 opacity-60 grayscale hover:grayscale-0 transition-all">
-          {["LAND ROVER", "AUDI", "FERRARI", "BMW", "HONDA"].map((brand) => (
+          {(activeVehicle === "cars" ? ["LAND ROVER", "AUDI", "FERRARI", "BMW", "HONDA"] : ["YAMAHA", "DUCATI", "KTM", "HONDA", "SUZUKI"]).map((brand) => (
             <div key={brand} className="text-xl font-heading font-bold tracking-widest text-foreground hover:text-primary transition-colors cursor-default">
               {brand}
             </div>
@@ -68,7 +70,7 @@ export function AppBanner() {
 
           <div className="z-10 text-center md:text-left md:w-1/2">
             <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-foreground leading-[1.1]">
-              PREMIUM CAR <br /> RENTAL
+              PREMIUM {activeVehicle === "cars" ? "CAR" : "BIKE"} <br /> RENTAL
             </h2>
             <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-8">
               <button className="bg-black text-white px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-black/80 transition-colors">

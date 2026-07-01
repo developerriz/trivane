@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Syncopate } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { VehicleProvider } from "@/context/VehicleContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,7 +30,9 @@ export default function RootLayout({
       lang="en"
       className={cn("h-full", "antialiased", inter.variable, syncopate.variable, "font-sans")}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <VehicleProvider>{children}</VehicleProvider>
+      </body>
     </html>
   );
 }
