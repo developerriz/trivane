@@ -66,9 +66,9 @@ export function AppPromo() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gray-100 rounded-full -z-10" />
           
           <img 
-            src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=600&h=1200" 
+            src="/phone.png" 
             alt="Mobile App Mockup" 
-            className="w-[300px] h-[600px] object-cover rounded-[40px] shadow-2xl border-8 border-white"
+            className="w-full h-[600px] object-contain drop-shadow-2xl"
           />
           
           {/* Decorative floating elements to simulate app UI */}

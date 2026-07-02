@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useVehicle } from "@/context/VehicleContext";
+import CurvedLoop from "./CurvedLoop";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,12 +52,17 @@ export function AppBanner() {
       <div className="container mx-auto px-6">
         
         {/* Logos Row */}
-        <div ref={logosRef} className="flex flex-wrap justify-center items-center gap-8 md:gap-16 mb-24 opacity-60 grayscale hover:grayscale-0 transition-all">
-          {(activeVehicle === "cars" ? ["LAND ROVER", "AUDI", "FERRARI", "BMW", "HONDA"] : ["YAMAHA", "DUCATI", "KTM", "HONDA", "SUZUKI"]).map((brand) => (
-            <div key={brand} className="text-xl font-heading font-bold tracking-widest text-foreground hover:text-primary transition-colors cursor-default">
-              {brand}
-            </div>
-          ))}
+        <div ref={logosRef} className="mb-24 w-full h-[120px] opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+          <CurvedLoop
+            marqueeText={
+              activeVehicle === "cars" 
+                ? "LAND ROVER  ✦  AUDI  ✦  FERRARI  ✦  BMW  ✦  HONDA  ✦  " 
+                : "YAMAHA  ✦  DUCATI  ✦  KTM  ✦  HONDA  ✦  SUZUKI  ✦  "
+            }
+            speed={2.5}
+            curveAmount={150}
+            className="font-heading font-bold tracking-widest fill-foreground"
+          />
         </div>
 
         {/* Orange Banner */}
@@ -92,9 +98,9 @@ export function AppBanner() {
 
           <div className="z-10 mt-12 md:mt-0 md:-my-24 relative h-[400px] w-full md:w-1/2 flex justify-center items-end">
             <img 
-              src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=600&h=1200" 
+              src="/phone.png" 
               alt="App mockup"
-              className="w-[280px] h-[550px] object-cover rounded-t-[40px] shadow-2xl border-x-8 border-t-8 border-white absolute bottom-0"
+              className="w-[480px] h-[650px] object-contain rounded-t-[40px] absolute top-5"
             />
           </div>
         </div>
