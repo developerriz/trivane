@@ -7,8 +7,8 @@ export function Footer() {
       <div className="border-b border-white/10">
         <div className="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-4">
-            <div className="bg-white rounded-lg p-2 shadow-sm">
-              <img src="/logo.png" alt="Trivane Logo" className="h-10 w-auto object-contain" />
+            <div className="bg-white rounded-xl p-2 shadow-sm">
+              <img src="/logo.png" alt="Trivane Logo" className="h-full w-auto object-contain" />
             </div>
             <h3 className="font-heading text-2xl md:text-3xl font-bold uppercase tracking-wider max-w-sm">
               Stay up to date on all the latest news.

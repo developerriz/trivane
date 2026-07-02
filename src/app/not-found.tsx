@@ -11,6 +11,8 @@ export default function NotFound() {
           src="https://images.unsplash.com/photo-1517616641215-0211116260a9?auto=format&fit=crop&q=80&w=2000" 
           alt="Empty misty road" 
           className="w-full h-full object-cover opacity-30 grayscale"
+          loading="lazy"
+          fetchPriority="low"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-transparent" />

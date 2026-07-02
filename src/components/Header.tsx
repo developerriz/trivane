@@ -70,24 +70,27 @@ export function Header() {
   }, []);
 
   return (
-    <header
-      ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto px-6 h-24 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
-          <img
-            src="/logo.png"
-            alt="Trivane Logo"
-            className="h-16 w-auto object-contain"
-          />
-        </Link>
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center w-full mt-4 md:mt-6 px-3 sm:px-4 lg:px-6 pointer-events-none">
+      <header
+        ref={headerRef}
+        className={`pointer-events-auto w-full max-w-7xl transition-all duration-300 rounded-full border ${
+          isScrolled 
+            ? "bg-white/95 backdrop-blur-md shadow-lg border-gray-200" 
+            : "bg-white/80 backdrop-blur-md shadow-md border-transparent"
+        }`}
+      >
+        <div className="px-6 md:px-8 h-16 md:h-20 flex items-center justify-between relative">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <img
+              src="/logo.png"
+              alt="Trivane Logo"
+              className="h-10 md:h-12 w-auto object-contain"
+            />
+          </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
           <Link
             href="/#home"
             onClick={(e) => handleScroll(e, "#home")}
@@ -177,7 +180,7 @@ export function Header() {
         </nav>
 
         {/* Right Side */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           <button className="w-10 h-10 rounded-full bg-black flex items-center justify-center text-white hover:bg-black/80 transition">
             <User size={18} />
           </button>
@@ -191,16 +194,16 @@ export function Header() {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-24 left-0 right-0 bg-background border-b border-border p-6 shadow-xl flex flex-col gap-6">
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden absolute top-full left-0 right-0 mt-4 bg-white border border-gray-200 rounded-[2rem] p-6 shadow-2xl flex flex-col gap-6">
 
           <Link
             href="/#home"
@@ -247,12 +250,15 @@ export function Header() {
               <User size={18} />
             </button>
 
-            <Button className="w-full rounded-full bg-primary hover:bg-primary/90">
-              Sign in
-            </Button>
+            <Link href="/auth" className="flex-1" onClick={() => setIsMobileMenuOpen(false)}>
+              <Button className="w-full rounded-full bg-primary hover:bg-primary/90 font-bold">
+                Sign in
+              </Button>
+            </Link>
           </div>
         </div>
       )}
-    </header>
+      </header>
+    </div>
   );
 }

@@ -52,7 +52,7 @@ export function AppBanner() {
       <div className="container mx-auto px-6">
         
         {/* Logos Row */}
-        <div ref={logosRef} className="mb-24 w-full h-[120px] opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+        <div ref={logosRef} className="mb-54 w-full h-[120px] opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
           <CurvedLoop
             marqueeText={
               activeVehicle === "cars" 
@@ -60,7 +60,7 @@ export function AppBanner() {
                 : "YAMAHA  ✦  DUCATI  ✦  KTM  ✦  HONDA  ✦  SUZUKI  ✦  "
             }
             speed={2.5}
-            curveAmount={150}
+            curveAmount={0}
             className="font-heading font-bold tracking-widest fill-foreground"
           />
         </div>
